@@ -40,6 +40,7 @@
 - [iOS] Improve RN component layout when hosted in SwiftUI ([#40794](https://github.com/expo/expo/pull/40794) by [@nishan](https://github.com/intergalacticspacehighway))
 - [iOS] Fix `TextField` causing crash when reload and unmounting. ([#40960](https://github.com/expo/expo/pull/40960) by [@nishan](https://github.com/intergalacticspacehighway))
 - [iOS] Fixed `null` not being correctly converted to `ValueOrUndefined` in `Record`. ([#41005](https://github.com/expo/expo/pull/41005) by [@lukmccall](https://github.com/lukmccall))
+- Fixed `NativeModule` extending `Record<string, any>`, which made it not type-safe.
 
 ### 💡 Others
 
