@@ -152,6 +152,7 @@ class LinkZoomTransitionSource: ExpoView {
 
 class LinkZoomTransitionEnabler: ExpoView {
   var zoomTransitionSourceIdentifier: String = ""
+  var isPreventingInteractiveDismissal: Bool = false
 
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -180,6 +181,9 @@ class LinkZoomTransitionEnabler: ExpoView {
           let sourceInfo = LinkZoomTransitionsSourceRepository.sharedRepository.getSource(
             identifier: self.zoomTransitionSourceIdentifier)
           return sourceInfo?.alignment
+        }
+        options.interactiveDismissShouldBegin = { _ in
+          !self.isPreventingInteractiveDismissal
         }
         controller.preferredTransition = .zoom(options: options) { _ in
           let sourceInfo = LinkZoomTransitionsSourceRepository.sharedRepository.getSource(

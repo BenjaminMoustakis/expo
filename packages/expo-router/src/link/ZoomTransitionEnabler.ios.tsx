@@ -1,3 +1,5 @@
+import { use } from 'react';
+
 import {
   getInternalExpoRouterParams,
   INTERNAL_EXPO_ROUTER_ZOOM_TRANSITION_SCREEN_ID_PARAM_NAME,
@@ -6,6 +8,7 @@ import {
 import type { ZoomTransitionEnablerProps } from './ZoomTransitionEnabler.types';
 import { useIsPreview } from './preview/PreviewRouteContext';
 import { LinkZoomTransitionEnabler } from './preview/native';
+import { DescriptorsContext } from '../fork/native-stack/descriptors-context';
 
 let _isZoomTransitionEnabled = false;
 
@@ -30,6 +33,8 @@ export function ZoomTransitionEnabler({ route }: ZoomTransitionEnablerProps) {
     'key' in route &&
     typeof route.key === 'string'
   ) {
+    const descriptorsMap = use(DescriptorsContext);
+    const currentDescriptor = descriptorsMap[route.key];
     const params = route.params ?? {};
     const internalParams = getInternalExpoRouterParams(params);
     const zoomTransitionId =
@@ -37,8 +42,14 @@ export function ZoomTransitionEnabler({ route }: ZoomTransitionEnablerProps) {
     const zoomTransitionScreenId =
       internalParams[INTERNAL_EXPO_ROUTER_ZOOM_TRANSITION_SCREEN_ID_PARAM_NAME];
     const hasZoomTransition = !!zoomTransitionId && zoomTransitionScreenId === route.key;
+    const preventInteractiveDismissal = currentDescriptor?.options?.gestureEnabled === false;
     if (hasZoomTransition && typeof zoomTransitionId === 'string') {
-      return <LinkZoomTransitionEnabler zoomTransitionSourceIdentifier={zoomTransitionId} />;
+      return (
+        <LinkZoomTransitionEnabler
+          zoomTransitionSourceIdentifier={zoomTransitionId}
+          preventInteractiveDismissal={preventInteractiveDismissal}
+        />
+      );
     }
   }
   return null;

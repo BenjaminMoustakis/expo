@@ -3,9 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.enableZoomTransition = enableZoomTransition;
 exports.isZoomTransitionEnabled = isZoomTransitionEnabled;
 exports.ZoomTransitionEnabler = ZoomTransitionEnabler;
+const react_1 = require("react");
 const navigationParams_1 = require("../navigationParams");
 const PreviewRouteContext_1 = require("./preview/PreviewRouteContext");
 const native_1 = require("./preview/native");
+const descriptors_context_1 = require("../fork/native-stack/descriptors-context");
 let _isZoomTransitionEnabled = false;
 function enableZoomTransition() {
     console.warn('[expo-router] Zoom transition is an experimental feature. Use at your own risk.');
@@ -24,13 +26,16 @@ function ZoomTransitionEnabler({ route }) {
         typeof route.params === 'object' &&
         'key' in route &&
         typeof route.key === 'string') {
+        const descriptorsMap = (0, react_1.use)(descriptors_context_1.DescriptorsContext);
+        const currentDescriptor = descriptorsMap[route.key];
         const params = route.params ?? {};
         const internalParams = (0, navigationParams_1.getInternalExpoRouterParams)(params);
         const zoomTransitionId = internalParams[navigationParams_1.INTERNAL_EXPO_ROUTER_ZOOM_TRANSITION_SOURCE_ID_PARAM_NAME];
         const zoomTransitionScreenId = internalParams[navigationParams_1.INTERNAL_EXPO_ROUTER_ZOOM_TRANSITION_SCREEN_ID_PARAM_NAME];
         const hasZoomTransition = !!zoomTransitionId && zoomTransitionScreenId === route.key;
+        const preventInteractiveDismissal = currentDescriptor?.options?.gestureEnabled === false;
         if (hasZoomTransition && typeof zoomTransitionId === 'string') {
-            return <native_1.LinkZoomTransitionEnabler zoomTransitionSourceIdentifier={zoomTransitionId}/>;
+            return (<native_1.LinkZoomTransitionEnabler zoomTransitionSourceIdentifier={zoomTransitionId} preventInteractiveDismissal={preventInteractiveDismissal}/>);
         }
     }
     return null;
