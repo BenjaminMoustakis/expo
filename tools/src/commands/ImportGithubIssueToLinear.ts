@@ -78,7 +78,7 @@ async function importIssueAsync(githubIssueNumber: number, importer?: string) {
     Linear.ENG_TEAM_ID
   );
 
-  Linear.createIssueAsync({
+  const parentIssue = await Linear.createIssueAsync({
     title: issue.title,
     labelIds: [githubLabel.id, expoSDKLabel.id],
     stateId: backlogWorkflowState.id,
@@ -86,6 +86,32 @@ async function importIssueAsync(githubIssueNumber: number, importer?: string) {
     assigneeId: (await inferLinearUserId(issue.assignees?.map(({ login }) => login)))?.id,
     subscriberIds: importerLinearUser?.id ? [importerLinearUser.id] : undefined,
   });
+
+  // Import tracked issues (sub-issues) if any
+  const trackedIssues = await GitHub.getTrackedIssuesAsync(githubIssueNumber);
+  if (trackedIssues.length > 0) {
+    logger.info(
+      `Found ${trackedIssues.length} tracked issue(s) for GitHub issue #${githubIssueNumber}`
+    );
+
+    for (const trackedIssue of trackedIssues) {
+      try {
+        const subIssueDescription = `### This sub-issue was automatically imported from GitHub: https://github.com/expo/expo/issues/${trackedIssue.number}\n#### Parent issue: ${issue.html_url}`;
+
+        await Linear.createIssueAsync({
+          title: trackedIssue.title,
+          labelIds: [githubLabel.id, expoSDKLabel.id],
+          stateId: backlogWorkflowState.id,
+          description: subIssueDescription,
+          parentId: parentIssue?.issue?.id,
+        });
+
+        logger.info(`Imported sub-issue #${trackedIssue.number}: ${trackedIssue.title}`);
+      } catch (error) {
+        logger.warn(`Failed to import sub-issue #${trackedIssue.number}: ${error}`);
+      }
+    }
+  }
 }
 
 async function inferLinearUserId(githubUsernames?: string[]): Promise<LinearUser | undefined> {
