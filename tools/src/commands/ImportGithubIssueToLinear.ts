@@ -97,24 +97,26 @@ async function importIssueAsync(githubIssueNumber: number, importer?: string) {
     const parentLinearIssueId = parentIssue?.issue?.id;
     if (!parentLinearIssueId) {
       logger.warn('Failed to get parent Linear issue ID. Skipping sub-issue import.');
-      return;
-    }
+    } else {
+      // Extract the base repository URL from the parent issue URL
+      const baseRepoUrl = issue.html_url.substring(0, issue.html_url.lastIndexOf('/'));
 
-    for (const trackedIssue of trackedIssues) {
-      try {
-        const subIssueDescription = `### This sub-issue was automatically imported from GitHub: ${issue.html_url.replace(/\/\d+$/, `/${trackedIssue.number}`)}\n#### Parent issue: ${issue.html_url}`;
+      for (const trackedIssue of trackedIssues) {
+        try {
+          const subIssueDescription = `### This sub-issue was automatically imported from GitHub: ${baseRepoUrl}/${trackedIssue.number}\n#### Parent issue: ${issue.html_url}`;
 
-        await Linear.createIssueAsync({
-          title: trackedIssue.title,
-          labelIds: [githubLabel.id, expoSDKLabel.id],
-          stateId: backlogWorkflowState.id,
-          description: subIssueDescription,
-          parentId: parentLinearIssueId,
-        });
+          await Linear.createIssueAsync({
+            title: trackedIssue.title,
+            labelIds: [githubLabel.id, expoSDKLabel.id],
+            stateId: backlogWorkflowState.id,
+            description: subIssueDescription,
+            parentId: parentLinearIssueId,
+          });
 
-        logger.info(`Imported sub-issue #${trackedIssue.number}: ${trackedIssue.title}`);
-      } catch (error) {
-        logger.warn(`Failed to import sub-issue #${trackedIssue.number}: ${error}`);
+          logger.info(`Imported sub-issue #${trackedIssue.number}: ${trackedIssue.title}`);
+        } catch (error) {
+          logger.warn(`Failed to import sub-issue #${trackedIssue.number}: ${error}`);
+        }
       }
     }
   }
