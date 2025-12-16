@@ -94,16 +94,22 @@ async function importIssueAsync(githubIssueNumber: number, importer?: string) {
       `Found ${trackedIssues.length} tracked issue(s) for GitHub issue #${githubIssueNumber}`
     );
 
+    const parentLinearIssueId = parentIssue?.issue?.id;
+    if (!parentLinearIssueId) {
+      logger.warn('Failed to get parent Linear issue ID. Skipping sub-issue import.');
+      return;
+    }
+
     for (const trackedIssue of trackedIssues) {
       try {
-        const subIssueDescription = `### This sub-issue was automatically imported from GitHub: https://github.com/expo/expo/issues/${trackedIssue.number}\n#### Parent issue: ${issue.html_url}`;
+        const subIssueDescription = `### This sub-issue was automatically imported from GitHub: ${issue.html_url.replace(/\/\d+$/, `/${trackedIssue.number}`)}\n#### Parent issue: ${issue.html_url}`;
 
         await Linear.createIssueAsync({
           title: trackedIssue.title,
           labelIds: [githubLabel.id, expoSDKLabel.id],
           stateId: backlogWorkflowState.id,
           description: subIssueDescription,
-          parentId: parentIssue?.issue?.id,
+          parentId: parentLinearIssueId,
         });
 
         logger.info(`Imported sub-issue #${trackedIssue.number}: ${trackedIssue.title}`);

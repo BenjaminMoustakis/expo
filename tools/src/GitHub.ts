@@ -232,6 +232,16 @@ export async function getIssueAsync(issue_number: number) {
   return data;
 }
 
+interface TrackedIssuesResponse {
+  repository?: {
+    issue?: {
+      trackedIssues?: {
+        nodes: { number: number; title: string }[];
+      };
+    };
+  };
+}
+
 /**
  * Returns tracked issues (sub-issues) for a given issue number.
  */
@@ -239,7 +249,7 @@ export async function getTrackedIssuesAsync(
   issue_number: number
 ): Promise<{ number: number; title: string }[]> {
   try {
-    const { repository } = await octokit.graphql<any>(
+    const { repository } = await octokit.graphql<TrackedIssuesResponse>(
       `query GetTrackedIssues($repo: String!, $owner: String!, $issueNumber: Int!) {
         repository(name: $repo, owner: $owner) {
           issue(number: $issueNumber) {
