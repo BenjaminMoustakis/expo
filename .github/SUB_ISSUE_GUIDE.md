@@ -24,14 +24,17 @@ First, create a main issue that describes the overall goal or problem. In the is
 
 ```markdown
 ## Overview
+
 [Describe the overall feature or problem]
 
 ## Sub-Issues
+
 - [ ] #XXX - [Sub-issue title 1]
 - [ ] #XXX - [Sub-issue title 2]
 - [ ] #XXX - [Sub-issue title 3]
 
 ## Acceptance Criteria
+
 - [ ] All sub-issues are completed
 - [ ] Integration testing passes
 - [ ] Documentation is updated
@@ -71,20 +74,24 @@ When working on a sub-issue:
 Let's say we want to add OAuth support to the Expo SDK:
 
 **Parent Issue #100**: "Add OAuth support to Expo SDK"
+
 ```markdown
 ## Overview
+
 Implement OAuth authentication support for the Expo SDK with providers
 for Google, GitHub, and Apple.
 
 ## Sub-Issues
+
 - [ ] #101 - Core OAuth module architecture
 - [ ] #102 - Google OAuth provider
-- [ ] #103 - GitHub OAuth provider  
+- [ ] #103 - GitHub OAuth provider
 - [ ] #104 - Apple OAuth provider
 - [ ] #105 - Example app demonstrating OAuth
 - [ ] #106 - Documentation for OAuth setup
 
 ## Acceptance Criteria
+
 - [ ] All sub-issues completed
 - [ ] Works on iOS, Android, and Web
 - [ ] E2E tests pass
@@ -94,6 +101,7 @@ for Google, GitHub, and Apple.
 Each sub-issue would have:
 
 **Sub-Issue #101**: "Core OAuth module architecture"
+
 - Parent Issue: #100
 - Priority: High
 - Dependencies: None
@@ -101,6 +109,7 @@ Each sub-issue would have:
 - Testing: Unit tests for core logic
 
 **Sub-Issue #102**: "Google OAuth provider"
+
 - Parent Issue: #100
 - Priority: High
 - Dependencies: Requires #101
@@ -139,6 +148,7 @@ Common labels to use with sub-issues:
 ## Questions?
 
 If you have questions about the sub-issue workflow, ask in:
+
 - The parent issue's discussion thread
 - The [Expo Discord](https://chat.expo.dev/) #contributing channel
 - Tag `@expo/team` in a comment
