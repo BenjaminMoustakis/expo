@@ -52,6 +52,7 @@ For complex features or bug fixes that require multiple steps or involve several
 When creating a parent issue that will be broken into sub-issues:
 
 1. In the parent issue description, create a task list of all sub-issues:
+
    ```markdown
    ## Sub-Issues
 
@@ -59,6 +60,7 @@ When creating a parent issue that will be broken into sub-issues:
    - [ ] #124 - UI components
    - [ ] #125 - Documentation updates
    ```
+
 2. Update this list as sub-issues are created and completed
 3. Keep the parent issue open until all sub-issues are resolved
 

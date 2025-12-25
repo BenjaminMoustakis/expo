@@ -1,4 +1,4 @@
-name: "📋 Sub-Issue"
+name: '📋 Sub-Issue'
 description: 'Create a sub-issue to track a specific task or component of a larger issue'
 labels: ['sub-issue']
 body:
@@ -13,14 +13,14 @@ body:
       description: |
         Link to the parent issue that this sub-issue is part of.
         Format: #issue_number or full URL to the issue
-      placeholder: "#3 or https://github.com/owner/repo/issues/3"
+      placeholder: '#3 or https://github.com/owner/repo/issues/3'
     validations:
       required: true
   - type: input
     attributes:
       label: Sub-Issue Title
       description: A clear, concise title for this specific sub-task
-      placeholder: "Implement authentication module"
+      placeholder: 'Implement authentication module'
     validations:
       required: true
   - type: textarea
@@ -31,7 +31,7 @@ body:
         What needs to be accomplished? What are the acceptance criteria?
       placeholder: |
         This sub-issue tracks the implementation of...
-        
+
         Acceptance Criteria:
         - [ ] Criterion 1
         - [ ] Criterion 2
@@ -69,7 +69,7 @@ body:
         Files to modify:
         - packages/expo/src/auth.ts
         - apps/example/App.tsx
-        
+
         Considerations:
         - Must maintain backward compatibility
         - Needs to work on iOS, Android, and Web
