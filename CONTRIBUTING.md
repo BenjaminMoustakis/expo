@@ -1,5 +1,6 @@
 # Contributing to the Expo SDK
 
+- [📋 Working with Sub-Issues](#-working-with-sub-issues)
 - [📦 Download and Setup](#-download-and-setup)
 - [✍️ Editing SDK Packages](#%EF%B8%8F-editing-sdk-packages)
   - [Style](#style)
@@ -23,6 +24,42 @@ Manual smoke tests are included in `apps/native-component-list`, which is a good
 > 💡 How does `bare-expo` relate to `test-suite`?
 >
 > `bare-expo` is a bare React Native app that links all of the Expo SDK dependencies in the `packages/` directory in order to be able to run projects in the `apps/` directory. It currently runs `test-suite` (an Expo app with some custom code to turn it into a test runner), and `native-component-list`. If you run `expo start` in the `test-suite` directory you can load the project in Expo Go. `bare-expo` imports the `test-suite` app root component and uses it as its own root component.
+
+## 📋 Working with Sub-Issues
+
+For complex features or bug fixes that require multiple steps or involve several components, we recommend breaking the work into sub-issues. Sub-issues help organize work, track progress, and make it easier for multiple contributors to collaborate on a larger initiative.
+
+### Creating a Sub-Issue
+
+1. Use the **Sub-Issue** template when creating a new issue (available in the issue templates dropdown)
+2. Reference the parent issue in the "Parent Issue" field using `#issue_number` format
+3. Provide a clear title and description specific to the sub-task
+4. Set appropriate priority and list any dependencies on other sub-issues
+5. Add technical notes about files, APIs, or functions to be modified
+6. Outline the testing strategy for this specific component
+
+### Best Practices for Sub-Issues
+
+- **Keep sub-issues focused**: Each sub-issue should address a single, well-defined task
+- **Link to parent**: Always reference the parent issue so the relationship is clear
+- **Track dependencies**: If a sub-issue depends on another, note it in the Dependencies field
+- **Update regularly**: Keep the sub-issue updated with progress and findings
+- **Use labels**: Apply the `sub-issue` label along with any other relevant labels
+- **Close when complete**: Mark sub-issues as complete only when all acceptance criteria are met
+
+### Managing Parent Issues
+
+When creating a parent issue that will be broken into sub-issues:
+
+1. In the parent issue description, create a task list of all sub-issues:
+   ```markdown
+   ## Sub-Issues
+   - [ ] #123 - Authentication implementation
+   - [ ] #124 - UI components
+   - [ ] #125 - Documentation updates
+   ```
+2. Update this list as sub-issues are created and completed
+3. Keep the parent issue open until all sub-issues are resolved
 
 ## 📦 Download and Setup
 
