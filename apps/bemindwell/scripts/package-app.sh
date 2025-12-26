@@ -57,6 +57,7 @@ cp "${APP_DIR}/.npmignore" "${STAGE_DIR}/" 2>/dev/null || true
 cp "${APP_DIR}/README.md" "${STAGE_DIR}/" 2>/dev/null || true
 cp "${APP_DIR}/PACKAGE_INFO.md" "${STAGE_DIR}/" 2>/dev/null || true
 cp "${APP_DIR}/PUBLISHING_GUIDE.md" "${STAGE_DIR}/" 2>/dev/null || true
+cp "${APP_DIR}/SUMMARY.md" "${STAGE_DIR}/" 2>/dev/null || true
 
 echo "✅ Files copied successfully"
 echo ""
