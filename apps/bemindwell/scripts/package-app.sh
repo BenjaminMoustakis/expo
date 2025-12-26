@@ -29,6 +29,10 @@ mkdir -p "${OUTPUT_DIR}"
 
 # Create a temporary directory for staging
 TEMP_DIR=$(mktemp -d)
+if [ ! -d "$TEMP_DIR" ]; then
+    echo "❌ Error: Failed to create temporary directory"
+    exit 1
+fi
 STAGE_DIR="${TEMP_DIR}/bemindwell"
 mkdir -p "${STAGE_DIR}"
 
