@@ -12,7 +12,13 @@ Quick guide to deploy BeMindWell to www.bemindwell.com.au
 
 ### 1. Create Vercel Project
 
+**Note:** This is a monorepo project using Yarn workspaces.
+
 ```bash
+# From repository root
+yarn install
+
+# Navigate to app directory
 cd apps/BeMindWell
 vercel login
 vercel link
@@ -22,7 +28,10 @@ Or via Vercel Dashboard:
 1. Go to https://vercel.com/new
 2. Import `BenjaminMoustakis/expo` repository
 3. Set Root Directory: `apps/BeMindWell`
-4. Deploy
+4. Build Command: `cd ../.. && yarn install --frozen-lockfile && cd apps/BeMindWell && yarn export:web`
+5. Output Directory: `web-build`
+6. Install Command: `yarn install`
+7. Deploy
 
 ### 2. Get Credentials
 
@@ -78,10 +87,15 @@ vercel --prod
 
 ## Test Locally
 
+**Note:** This is a monorepo - install dependencies from the root first:
+
 ```bash
+# From repository root
+yarn install
+
+# Navigate to app
 cd apps/BeMindWell
-npm install
-npm run export:web
+yarn export:web
 npx serve web-build
 ```
 

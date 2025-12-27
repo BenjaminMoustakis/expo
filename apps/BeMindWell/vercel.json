@@ -1,9 +1,9 @@
 {
-  "buildCommand": "npm run export:web",
+  "buildCommand": "cd ../.. && yarn install --frozen-lockfile && cd apps/BeMindWell && yarn export:web",
   "outputDirectory": "web-build",
-  "devCommand": "npm run web",
+  "devCommand": "yarn web",
   "framework": null,
-  "installCommand": "npm install",
+  "installCommand": "yarn install",
   "rewrites": [
     {
       "source": "/(.*)",

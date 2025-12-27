@@ -20,6 +20,8 @@ The BeMindWell app is configured for web deployment with:
 - **GitHub Actions** - Automated deployment workflow
 - **Custom Domain** - www.bemindwell.com.au
 
+**Important:** This project is part of a **Yarn workspaces monorepo**. Dependencies must be installed at the repository root level (`expo/`) before working with the BeMindWell app.
+
 ## Prerequisites
 
 Before deploying, ensure you have:
@@ -49,11 +51,13 @@ npm install -g vercel
 4. Configure project settings:
    - **Framework Preset:** Other
    - **Root Directory:** `apps/BeMindWell`
-   - **Build Command:** `npm run export:web`
+   - **Build Command:** `cd ../.. && yarn install --frozen-lockfile && cd apps/BeMindWell && yarn export:web`
    - **Output Directory:** `web-build`
-   - **Install Command:** `npm install`
+   - **Install Command:** `yarn install`
 
 5. Click **"Deploy"**
+
+**Note:** This is a monorepo using Yarn workspaces, so the build command installs dependencies at the root level first.
 
 ### Step 3: Get Vercel Credentials
 
@@ -118,9 +122,9 @@ The workflow automatically deploys when:
 ### Workflow Steps
 
 1. **Checkout code** - Gets latest code from repository
-2. **Setup Node.js** - Installs Node.js v18
-3. **Install dependencies** - Runs `npm ci`
-4. **Export web build** - Runs `npm run export:web` to generate static files
+2. **Setup Node.js** - Installs Node.js v18 with Yarn caching
+3. **Install workspace dependencies** - Runs `yarn install` at the repository root (monorepo)
+4. **Export web build** - Runs `yarn export:web` to generate static files in BeMindWell directory
 5. **Pull Vercel config** - Downloads Vercel environment settings
 6. **Build artifacts** - Prepares deployment package
 7. **Deploy to Vercel** - Uploads and deploys to Vercel
@@ -150,23 +154,30 @@ The workflow automatically deploys when:
 
 ### Local Development Testing
 
+**Note:** This project is part of a monorepo. Install dependencies from the repository root first:
+
 ```bash
+# From repository root
+yarn install
+
 # Navigate to app directory
 cd apps/BeMindWell
 
-# Install dependencies
-npm install
-
 # Start development server
-npm run web
+yarn web
 
 # Build for production
-npm run export:web
+yarn export:web
 ```
 
 ### Deploy Manually with Vercel CLI
 
+**Note:** This project is part of a monorepo. Ensure dependencies are installed at the root:
+
 ```bash
+# From repository root, install dependencies
+yarn install
+
 # Navigate to app directory
 cd apps/BeMindWell
 
@@ -260,10 +271,24 @@ The `vercel.json` file in the project root contains:
 
 **Solution:**
 ```bash
+# From repository root
+rm -rf node_modules yarn.lock
+yarn install
+
+# Then try building again
 cd apps/BeMindWell
-rm -rf node_modules package-lock.json
-npm install
-npm run export:web
+yarn export:web
+```
+
+Or if working in the BeMindWell directory:
+```bash
+cd apps/BeMindWell
+rm -rf node_modules
+cd ../..
+rm -rf node_modules yarn.lock
+yarn install
+cd apps/BeMindWell
+yarn export:web
 ```
 
 ### Workflow Fails - Missing Secrets
