@@ -40,6 +40,8 @@ Before deploying, ensure you have:
 ### Step 1: Install Vercel CLI (Optional for local testing)
 
 ```bash
+yarn global add vercel
+# or
 npm install -g vercel
 ```
 
@@ -337,8 +339,11 @@ yarn export:web
 
 2. **Verify web build locally:**
    ```bash
+   # From repository root
+   yarn install
+   
    cd apps/BeMindWell
-   npm run export:web
+   yarn export:web
    npx serve web-build
    ```
 
@@ -371,10 +376,10 @@ yarn export:web
 
 ```bash
 # Start development server
-npm run web
+yarn web
 
 # Build for production
-npm run export:web
+yarn export:web
 
 # Deploy to Vercel (manual)
 vercel --prod
