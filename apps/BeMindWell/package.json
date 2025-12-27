@@ -10,7 +10,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "export:web": "expo export:web",
-    "build:web": "expo export:web",
+    "build:web": "npm run export:web",
     "lint": "expo lint",
     "create-zip": "bash ./scripts/create-distribution-zips.sh"
   },
