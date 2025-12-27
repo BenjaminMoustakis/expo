@@ -3,7 +3,6 @@
   "outputDirectory": "web-build",
   "devCommand": "yarn web",
   "framework": null,
-  "installCommand": "yarn install",
   "rewrites": [
     {
       "source": "/(.*)",
