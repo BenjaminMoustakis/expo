@@ -62,7 +62,7 @@ jobs:
         working-directory: apps/BeMindWell
         run: vercel pull --yes --environment=${{ steps.deployment-env.outputs.environment }} --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Build Project Artifacts
+      - name: Prepare Vercel Deployment
         working-directory: apps/BeMindWell
         run: vercel build ${{ steps.deployment-env.outputs.prod-flag }} --token=${{ secrets.VERCEL_TOKEN }}
 
