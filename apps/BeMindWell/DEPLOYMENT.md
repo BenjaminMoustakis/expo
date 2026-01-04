@@ -366,7 +366,7 @@ yarn export:web
 ## Additional Resources
 
 - **Vercel Documentation:** https://vercel.com/docs
-- **Expo Web Documentation:** https://docs.expo.dev/guides/customizing-webpack/
+- **Expo Web Documentation:** https://docs.expo.dev/workflow/web/
 - **GitHub Actions Documentation:** https://docs.github.com/en/actions
 - **Vercel CLI Reference:** https://vercel.com/docs/cli
 
