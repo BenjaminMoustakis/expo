@@ -23,15 +23,16 @@ credentials
 *.p8
 *.json.template
 google-service-account.json
+secrets.json
+.secrets
 
 # Testing
 coverage
 .nyc_output
 
 # Environment
-.env
-.env.local
-.env.*.local
+# Ignore all environment variable files (production, staging, local variants, etc.)
+.env*
 
 # OS
 .DS_Store
