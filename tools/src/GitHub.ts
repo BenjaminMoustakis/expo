@@ -232,6 +232,50 @@ export async function getIssueAsync(issue_number: number) {
   return data;
 }
 
+interface TrackedIssuesResponse {
+  repository?: {
+    issue?: {
+      trackedIssues?: {
+        nodes: { number: number; title: string }[];
+      };
+    };
+  };
+}
+
+/**
+ * Returns tracked issues (sub-issues) for a given issue number.
+ */
+export async function getTrackedIssuesAsync(
+  issue_number: number
+): Promise<{ number: number; title: string }[]> {
+  try {
+    const { repository } = await octokit.graphql<TrackedIssuesResponse>(
+      `query GetTrackedIssues($repo: String!, $owner: String!, $issueNumber: Int!) {
+        repository(name: $repo, owner: $owner) {
+          issue(number: $issueNumber) {
+            trackedIssues(first: 100) {
+              nodes {
+                number
+                title
+              }
+            }
+          }
+        }
+      }`,
+      {
+        owner,
+        repo,
+        issueNumber: issue_number,
+      }
+    );
+
+    return repository?.issue?.trackedIssues?.nodes || [];
+  } catch {
+    // If trackedIssues is not supported or fails, return empty array
+    return [];
+  }
+}
+
 /**
  * Returns a list of all open issues. Limited to 10 items.
  */
