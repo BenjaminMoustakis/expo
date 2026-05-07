@@ -1,0 +1,88 @@
+name: '📋 Sub-Issue'
+description: 'Create a sub-issue to track a specific task or component of a larger issue'
+labels: ['sub-issue']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to create a sub-issue that tracks a specific task or component of a larger issue.
+        Sub-issues help break down complex work into manageable pieces.
+  - type: input
+    attributes:
+      label: Parent Issue
+      description: |
+        Link to the parent issue that this sub-issue is part of.
+        Format: #issue_number or full URL to the issue
+      placeholder: '#3 or https://github.com/owner/repo/issues/3'
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Sub-Issue Title
+      description: A clear, concise title for this specific sub-task
+      placeholder: 'Implement authentication module'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: |
+        Describe the specific work to be done in this sub-issue.
+        What needs to be accomplished? What are the acceptance criteria?
+      placeholder: |
+        This sub-issue tracks the implementation of...
+
+        Acceptance Criteria:
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Priority
+      description: How important is this sub-issue relative to others?
+      options:
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Dependencies
+      description: |
+        List any other sub-issues or tasks that must be completed before this one.
+        Use #issue_number format to link to them.
+      placeholder: |
+        - Depends on #1
+        - Requires completion of #2
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Technical Notes
+      description: |
+        Any technical details, considerations, or implementation notes specific to this sub-issue.
+        Include file paths, API endpoints, or specific functions that need to be modified.
+      placeholder: |
+        Files to modify:
+        - packages/expo/src/auth.ts
+        - apps/example/App.tsx
+
+        Considerations:
+        - Must maintain backward compatibility
+        - Needs to work on iOS, Android, and Web
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Testing Strategy
+      description: How should this sub-issue be tested?
+      placeholder: |
+        - [ ] Unit tests for core functionality
+        - [ ] Integration tests for API endpoints
+        - [ ] Manual testing on iOS
+        - [ ] Manual testing on Android
+    validations:
+      required: false
