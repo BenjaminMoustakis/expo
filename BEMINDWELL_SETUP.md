@@ -7,6 +7,8 @@ A complete **BeMindWell** mobile application has been set up in `apps/BeMindWell
 ✅ **Full Expo/React Native app structure**
 ✅ **iOS and Android configuration**
 ✅ **EAS Build configuration for App Store publishing**
+✅ **Web build configuration for Vercel deployment**
+✅ **GitHub Actions workflow for automated deployments**
 ✅ **Comprehensive documentation**
 ✅ **Credential setup guides**
 ✅ **Distribution ZIP creation scripts**
@@ -44,6 +46,8 @@ All BeMindWell app files are in this directory.
 | **[QUICKSTART.md](apps/BeMindWell/QUICKSTART.md)** | Fast setup and publishing guide |
 | **[README.md](apps/BeMindWell/README.md)** | Complete documentation |
 | **[CREDENTIALS_GUIDE.md](apps/BeMindWell/CREDENTIALS_GUIDE.md)** | Detailed credential setup |
+| **[DEPLOYMENT.md](apps/BeMindWell/DEPLOYMENT.md)** | Web deployment to Vercel guide |
+| **[VERCEL_QUICKSTART.md](apps/BeMindWell/VERCEL_QUICKSTART.md)** | Quick Vercel deployment setup |
 | **[credentials/README.md](apps/BeMindWell/credentials/README.md)** | Quick credential reference |
 
 ---
@@ -93,6 +97,43 @@ eas build:download --platform android
 zip -r BeMindWell-iOS-v1.0.0.zip path/to/app.ipa
 zip -r BeMindWell-Android-v1.0.0.zip path/to/app.aab
 ```
+
+---
+
+## 🌐 Web Deployment to Vercel
+
+### Deploy to www.bemindwell.com.au
+
+The BeMindWell app is ready for web deployment using Vercel:
+
+**Quick Setup (5 minutes):**
+
+1. **Create Vercel account** at https://vercel.com
+2. **Import repository** and set Root Directory to `apps/BeMindWell`
+3. **Configure build settings:**
+   - Build Command: `cd ../.. && yarn install --frozen-lockfile && cd apps/BeMindWell && yarn export:web`
+   - Output Directory: `web-build`
+4. **Add GitHub secrets** for automated deployment:
+   - `VERCEL_TOKEN`
+   - `VERCEL_ORG_ID`
+   - `VERCEL_PROJECT_ID`
+5. **Configure custom domain** www.bemindwell.com.au in Vercel Dashboard
+
+**Detailed Instructions:**
+- **[DEPLOYMENT.md](apps/BeMindWell/DEPLOYMENT.md)** - Complete web deployment guide
+- **[VERCEL_QUICKSTART.md](apps/BeMindWell/VERCEL_QUICKSTART.md)** - 5-minute setup guide
+
+**What's Included:**
+- ✅ Vercel configuration (`vercel.json`)
+- ✅ GitHub Actions workflow for automated deployment
+- ✅ Web export scripts in `package.json`
+- ✅ Security headers and caching configuration
+- ✅ SPA routing support
+
+**Deployment Workflow:**
+- **Push to main/master** → Automatic production deployment
+- **Pull requests** → Preview deployments with URL in comments
+- **Manual trigger** → Deploy on-demand via GitHub Actions
 
 ---
 
@@ -289,6 +330,7 @@ To make BeMindWell fully ready for App Store publishing, you need to:
 - **Expo Documentation:** https://docs.expo.dev
 - **EAS Build:** https://docs.expo.dev/build/introduction/
 - **EAS Submit:** https://docs.expo.dev/submit/introduction/
+- **Vercel Documentation:** https://vercel.com/docs
 - **App Store Connect:** https://appstoreconnect.apple.com
 - **Google Play Console:** https://play.google.com/console
 
@@ -300,6 +342,8 @@ Refer to:
 - `apps/BeMindWell/QUICKSTART.md` for quick answers
 - `apps/BeMindWell/README.md` for detailed information
 - `apps/BeMindWell/CREDENTIALS_GUIDE.md` for credential setup
+- `apps/BeMindWell/DEPLOYMENT.md` for web deployment to Vercel
+- `apps/BeMindWell/VERCEL_QUICKSTART.md` for quick Vercel setup
 - Expo documentation and community forums
 
 ---
@@ -308,9 +352,14 @@ Refer to:
 
 ✅ **BeMindWell app created and configured**
 ✅ **Ready for development**
+✅ **Web deployment ready with Vercel**
+✅ **GitHub Actions workflow for automated deployments**
 ✅ **ZIP creation script available** (`npm run create-zip`)
 ✅ **Comprehensive documentation provided**
 ✅ **Placeholder credentials set up**
-⚠️ **You need to fill in your actual credentials to publish**
+⚠️ **You need to fill in your actual credentials to publish to app stores**
+⚠️ **Configure Vercel secrets for automated web deployments**
 
 Navigate to `apps/BeMindWell/` and start with `QUICKSTART.md` to get going! 🚀
+
+For web deployment to www.bemindwell.com.au, see `DEPLOYMENT.md` or `VERCEL_QUICKSTART.md`! 🌐

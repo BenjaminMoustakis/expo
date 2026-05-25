@@ -1,0 +1,46 @@
+# Dependencies
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Expo
+.expo
+.expo-shared
+dist
+
+# Development
+.vscode
+_vscode
+*.log
+
+# Build artifacts (non-web)
+ios
+android
+
+# Credentials
+credentials
+*.p8
+*.json.template
+google-service-account.json
+secrets.json
+.secrets
+
+# Testing
+coverage
+.nyc_output
+
+# Environment
+# Ignore all environment variable files (production, staging, local variants, etc.)
+.env*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# EAS
+eas.json
+
+# Git
+.git
+.gitignore
