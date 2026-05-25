@@ -78,7 +78,7 @@ async function importIssueAsync(githubIssueNumber: number, importer?: string) {
     Linear.ENG_TEAM_ID
   );
 
-  Linear.createIssueAsync({
+  const parentIssue = await Linear.createIssueAsync({
     title: issue.title,
     labelIds: [githubLabel.id, expoSDKLabel.id],
     stateId: backlogWorkflowState.id,
@@ -86,6 +86,40 @@ async function importIssueAsync(githubIssueNumber: number, importer?: string) {
     assigneeId: (await inferLinearUserId(issue.assignees?.map(({ login }) => login)))?.id,
     subscriberIds: importerLinearUser?.id ? [importerLinearUser.id] : undefined,
   });
+
+  // Import tracked issues (sub-issues) if any
+  const trackedIssues = await GitHub.getTrackedIssuesAsync(githubIssueNumber);
+  if (trackedIssues.length > 0) {
+    logger.info(
+      `Found ${trackedIssues.length} tracked issue(s) for GitHub issue #${githubIssueNumber}`
+    );
+
+    const parentLinearIssueId = parentIssue?.issue?.id;
+    if (!parentLinearIssueId) {
+      logger.warn('Failed to get parent Linear issue ID. Skipping sub-issue import.');
+    } else {
+      // Extract the base repository URL from the parent issue URL
+      const baseRepoUrl = issue.html_url.substring(0, issue.html_url.lastIndexOf('/'));
+
+      for (const trackedIssue of trackedIssues) {
+        try {
+          const subIssueDescription = `### This sub-issue was automatically imported from GitHub: ${baseRepoUrl}/${trackedIssue.number}\n#### Parent issue: ${issue.html_url}`;
+
+          await Linear.createIssueAsync({
+            title: trackedIssue.title,
+            labelIds: [githubLabel.id, expoSDKLabel.id],
+            stateId: backlogWorkflowState.id,
+            description: subIssueDescription,
+            parentId: parentLinearIssueId,
+          });
+
+          logger.info(`Imported sub-issue #${trackedIssue.number}: ${trackedIssue.title}`);
+        } catch (error) {
+          logger.warn(`Failed to import sub-issue #${trackedIssue.number}: ${error}`);
+        }
+      }
+    }
+  }
 }
 
 async function inferLinearUserId(githubUsernames?: string[]): Promise<LinearUser | undefined> {

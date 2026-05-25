@@ -19,7 +19,7 @@ export const ENG_TEAM_ID = 'e678ab8b-874f-4ee2-bf4b-6c0b60ac2743';
 export async function createIssueAsync(
   issueInput: Omit<IssueCreateInput, 'teamId'> & Partial<IssueCreateInput>
 ) {
-  await linearClient.createIssue({
+  return await linearClient.createIssue({
     teamId: ENG_TEAM_ID,
     ...issueInput,
   });
